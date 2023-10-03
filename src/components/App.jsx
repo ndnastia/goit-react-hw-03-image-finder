@@ -1,16 +1,47 @@
-export const App = () => {
-  return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
+import { Component } from "react";
+
+import style from "./App.module.css"
+
+import { fetchImages } from "helpers/api";
+
+import { Searchbar } from "./Searchbar/Searchbar";
+import { ImageGallery } from "./ImageGallery/ImageGallery";
+
+export class App extends Component {
+  state = {
+    images: null,
+    isLoading: false,
+    error: null,
+    searchedPostId: null,
+  }
+
+  fetchAllImages = async () => {
+    try {
+      this.setState({ isLoading: true });
+      const images = await fetchImages();
+      
+      this.setState({ images: images })
+      
+    } catch (error) {
+      this.setState({ error: error.message })
+    } finally {
+      this.setState({ isLoading: false })
+    }
+  }
+  componentDidMount() {
+    this.fetchAllImages();
+  }
+  render() {
+    const showImages =
+      Array.isArray(this.state.images) && this.state.images.length;
+    
+    return (
+        <div className={style['App']}>
+        <Searchbar />
+        {showImages && <ImageGallery images={this.state.images} />}
+        
     </div>
-  );
-};
+      )
+    }
+  
+}
