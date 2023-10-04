@@ -12,6 +12,7 @@
 }
 
 .Modal {
-  max-width: calc(100vw - 48px);
-  max-height: calc(100vh - 24px);
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  width: 80%;
 }
