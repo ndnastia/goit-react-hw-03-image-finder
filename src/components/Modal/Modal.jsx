@@ -1,3 +1,4 @@
+import { Component } from "react"
 import style from "./Modal.module.css"
 
 export default class Modal extends Component {
