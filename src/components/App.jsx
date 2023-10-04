@@ -1,5 +1,5 @@
 import { Component } from "react";
-
+import axios from "axios";
 import style from "./App.module.css"
 
 import { fetchImages } from "helpers/api";
@@ -38,7 +38,8 @@ export class App extends Component {
       Array.isArray(this.state.images) && this.state.images.length;
     
     return (
-        <div className={style['App']}>
+      <div className={style['App']}>
+        
         <Searchbar />
         {this.state.isLoading && <Loader />}
         {this.state.error && <p className={style["error"]}>{this.state.error}</p>}
