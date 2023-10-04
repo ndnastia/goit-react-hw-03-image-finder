@@ -3,9 +3,10 @@ import { Component } from "react";
 import style from "./App.module.css"
 
 import { fetchImages } from "helpers/api";
-
+import { Loader } from "./Loader/Loader";
 import { Searchbar } from "./Searchbar/Searchbar";
 import { ImageGallery } from "./ImageGallery/ImageGallery";
+
 
 export class App extends Component {
   state = {
@@ -20,7 +21,7 @@ export class App extends Component {
       this.setState({ isLoading: true });
       const images = await fetchImages();
       
-      this.setState({ images: images })
+      this.setState({ images: images.hits })
       
     } catch (error) {
       this.setState({ error: error.message })
@@ -38,7 +39,10 @@ export class App extends Component {
     return (
         <div className={style['App']}>
         <Searchbar />
+        {this.state.isLoading && <Loader />}
+        {this.state.error && <p className={style["error"]}>{this.state.error}</p>}
         {showImages && <ImageGallery images={this.state.images} />}
+        
         
     </div>
       )
